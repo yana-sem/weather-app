@@ -1,6 +1,5 @@
 // TODO list:
 // 1) current time must be also local ---->>> .dt???
-// 2) if not found ---.>> error
 
 let apiKey = "4bc4526b9c376d5f0c645084585c4fe5";
 // Display the current date and time using JavaScript
@@ -39,6 +38,9 @@ showCurrentDateTime();
 
 // showWeatherParams
 function showWeatherParams(response) {
+  // clear error message, if any
+  document.getElementById("error-message").innerHTML = ``;
+  // console.log(response.data.cod);
   let currentCityH1 = document.querySelector("h1");
   currentCityH1.innerHTML = response.data.name;
   // current temperature
@@ -66,10 +68,16 @@ function showWeatherParams(response) {
   document.getElementById("sunset").innerHTML = sunsetIso[1];
 }
 
+function showErrorMessage(response) {
+  document.getElementById(
+    "error-message"
+  ).innerHTML = `City not found. Please, check your request`;
+}
+
 function search(city) {
   let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-  // console.log(url);
-  axios.get(url).then(showWeatherParams);
+  console.log(url);
+  axios.get(url).then(showWeatherParams, showErrorMessage);
 }
 // SEARCH FIELD INPUT
 function handleSubmitSearch(event) {

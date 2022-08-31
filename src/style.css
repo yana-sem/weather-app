@@ -11,13 +11,6 @@
   position: relative;
   top: -22px;
 }
-/* .divider {
-  font-size: 16px;
-  color: #6c757d;
-  position: relative;
-  top: -4px;
-  opacity: 100%;
-} */
 .celsius-unit {
   padding-right: 4px;
 }
@@ -126,4 +119,8 @@ a {
 .btn-current-location {
   background: #576ff4;
   border: none;
+}
+.error-style {
+  margin: 8px 0 0 10px;
+  color: #de344e;
 }
