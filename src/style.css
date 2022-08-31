@@ -1,0 +1,129 @@
+.heading {
+  font-family: "Overlock", cursive;
+  font-size: 48px;
+  font-weight: 700;
+  color: #14216b;
+  line-height: 1.4;
+  margin: 0;
+}
+.degree-unit {
+  font-size: 28px;
+  position: relative;
+  top: -22px;
+}
+/* .divider {
+  font-size: 16px;
+  color: #6c757d;
+  position: relative;
+  top: -4px;
+  opacity: 100%;
+} */
+.celsius-unit {
+  padding-right: 4px;
+}
+.celsius-unit:hover,
+.fahrenheit-unit:hover {
+  color: #14216b;
+}
+
+.fahrenheit-unit {
+  padding-left: 4px;
+}
+.inactive-unit {
+  color: #9daebe;
+}
+.city-choices {
+  list-style-type: none;
+  margin: 20px 0 50px 4px;
+  padding: 0;
+}
+.city-choice-item {
+  display: inline;
+  padding: 0 8px;
+}
+.city-choice-link {
+  text-decoration: none;
+  color: #1e319e;
+}
+.city-choice-link:hover {
+  color: #576ff4;
+}
+.date-time {
+  margin: 10px 0 0 0;
+}
+.weather-parameters {
+  padding: 20px;
+  background: #f5f7fe;
+  border-radius: 16px;
+}
+.para-icon {
+  padding: 0 8px;
+  color: #14216b;
+}
+.para-icon-12 {
+  padding: 0 10px;
+  color: #14216b;
+}
+.para-value {
+  padding-left: 36px;
+  font-weight: 700;
+}
+.card-content-container {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 10px 0 0;
+}
+.card-title-forecast {
+  font-family: "Overlock", cursive;
+  font-size: 24px;
+  font-weight: 700;
+  color: #14216b;
+  line-height: 1.4;
+  margin: 0;
+}
+.card-custom:hover .card-body .card-title-forecast {
+  color: #f5f7fe;
+}
+.card-custom:hover .card-body .highest {
+  color: #ed5e74;
+}
+.card-custom:hover .card-body .lowest {
+  color: #8798f7;
+}
+.highest-lowest-temp {
+  margin: 4px 0 0 25px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.4;
+}
+.highest {
+  color: #de344e;
+}
+.lowest {
+  color: #1e319e;
+}
+.card-custom {
+  background: #f5f7fe;
+  transition: all 100ms ease-in-out;
+}
+.card-custom:hover {
+  background: #14216b;
+  box-shadow: 0px 8px 16px rgba(14, 25, 75, 0.15);
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: #14216b;
+}
+/* a:hover {
+  color: #576ff4;
+} */
+.click-prevention {
+  pointer-events: none;
+}
+
+.btn-current-location {
+  background: #576ff4;
+  border: none;
+}
