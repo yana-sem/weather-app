@@ -124,3 +124,6 @@ a {
   margin: 8px 0 0 10px;
   color: #de344e;
 }
+.weather-description {
+  text-transform: capitalize;
+}

@@ -1,10 +1,7 @@
-// TODO list:
-// 1) current time must be also local ---->>> .dt???
-
 let apiKey = "4bc4526b9c376d5f0c645084585c4fe5";
-// Display the current date and time using JavaScript
-function showCurrentDateTime() {
-  let now = new Date();
+
+function formatDate(timestamp) {
+  let calcTime = new Date(timestamp);
   let months = [
     "Jan",
     "Feb",
@@ -19,28 +16,28 @@ function showCurrentDateTime() {
     "Nov",
     "Dec",
   ];
-  let month = months[now.getMonth()];
+  let month = months[calcTime.getMonth()];
   let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  let day = days[now.getDay()];
-  let date = now.getDate();
-  // let hours = now.getHours();
-  // let minutes = now.getMinutes();
-  document.querySelector(
-    "#day-month-date"
-  ).innerHTML = `${day}, ${month} ${date}`;
-  document.querySelector("#time").innerHTML = now.toLocaleString("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
+  let day = days[calcTime.getDay()];
+  let hours = calcTime.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  let minutes = calcTime.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  let date = calcTime.getDate();
+  return `${day}, ${month} ${date}, ${hours}:${minutes}`;
 }
-showCurrentDateTime();
 
 // showWeatherParams
 function showWeatherParams(response) {
   // clear error message, if any
   document.getElementById("error-message").innerHTML = ``;
   // console.log(response.data.cod);
+  document.getElementById("description").innerHTML =
+    response.data.weather[0].description;
   let currentCityH1 = document.querySelector("h1");
   currentCityH1.innerHTML = response.data.name;
   // current temperature
@@ -66,6 +63,10 @@ function showWeatherParams(response) {
   sunset = new Date(sunset * 1000 + timezone);
   let sunsetIso = sunset.toISOString().match(/(\d{2}:\d{2})/);
   document.getElementById("sunset").innerHTML = sunsetIso[1];
+  // // timestamp
+  document.getElementById("calculation-time").innerHTML = formatDate(
+    response.data.dt * 1000
+  );
 }
 
 function showErrorMessage(response) {

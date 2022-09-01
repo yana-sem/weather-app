@@ -61,10 +61,6 @@
           </button>
         </div>
       </div>
-      <!-- <div class="row">
-        <div class="col error-style" id="error-message"></div>
-      </div> -->
-      <!-- List of frequently used city choices -->
       <div class="row">
         <div class="col-lg-5 col-md-7">
           <ul class="city-choices">
@@ -89,15 +85,17 @@
       <div class="row gx-5">
         <div class="col-auto">
           <!-- Current city and date-time -->
-          <div class="row">
+          <div class="row mb-3">
             <div class="col-auto">
               <h1 class="heading"></h1>
             </div>
             <div class="col">
               <p class="date-time text-muted">
-                <span id="day-month-date"> </span>
+                <span>Last updated:</span>
                 <br />
-                <span id="time"> </span>
+                <span id="calculation-time"></span>
+                <!-- <span id="day-month-date"></span>
+                <span id="time"> </span> -->
               </p>
             </div>
           </div>
@@ -116,8 +114,12 @@
                 ><sup id="feels-like-temp-unit">°C</sup>
               </p>
             </div>
-            <div class="col">
-              <img src="media/icons/sunny.svg" alt="Sunny" width="85px" />
+            <div class="col text-center">
+              <img src="media/icons/sunny.svg" alt="Sunny" width="60px" />
+              <p
+                class="text-muted mt-2 weather-description"
+                id="description"
+              ></p>
             </div>
           </div>
         </div>
@@ -258,7 +260,7 @@
       </div>
       <!-- Info about author and source code -->
       <div class="row">
-        <div class="col text-muted">
+        <div class="col text-muted" style="opacity: 0.8">
           This project was coded by
           <a
             href="https://www.linkedin.com/in/yana-semenenko/"
