@@ -35,7 +35,6 @@ function formatDate(timestamp) {
 function showWeatherParams(response) {
   // clear error message, if any
   document.getElementById("error-message").innerHTML = ``;
-  // console.log(response.data.cod);
   document.getElementById("description").innerHTML =
     response.data.weather[0].description;
   let currentCityH1 = document.querySelector("h1");
@@ -45,6 +44,17 @@ function showWeatherParams(response) {
   document.getElementById("current-temp").innerHTML = tempC;
   let tempCFeels = Math.round(response.data.main.feels_like);
   document.getElementById("feels-like-temp").innerHTML = tempCFeels;
+  // change weather icon
+  document
+    .getElementById("current-weather-icon")
+    .setAttribute(
+      "src",
+      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    );
+  document
+    .getElementById("current-weather-icon")
+    .setAttribute("alt", response.data.weather[0].description);
+
   // humidity
   let humidity = response.data.main.humidity;
   document.getElementById("humidity").innerHTML = `${humidity}%`;
