@@ -109,13 +109,9 @@ a {
   text-decoration: none;
   color: #14216b;
 }
-/* a:hover {
-  color: #576ff4;
-} */
 .click-prevention {
   pointer-events: none;
 }
-
 .btn-current-location {
   background: #576ff4;
   border: none;

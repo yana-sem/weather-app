@@ -35,15 +35,27 @@ function formatDate(timestamp) {
 function showWeatherParams(response) {
   // clear error message, if any
   document.getElementById("error-message").innerHTML = ``;
+  // RESET TO DEFAULT CLASSES AND BEHAVIOR TEMP UNITS ELEMENTS
+  document.querySelector(".celsius-unit").classList.remove("inactive-unit");
+  document.querySelector(".celsius-unit").classList.add("click-prevention");
+  document.querySelector(".fahrenheit-unit").classList.add("inactive-unit");
+  document
+    .querySelector(".fahrenheit-unit")
+    .classList.remove("click-prevention");
+  document.getElementById("feels-like-temp-unit").innerHTML = "°C";
+  //description
   document.getElementById("description").innerHTML =
     response.data.weather[0].description;
   let currentCityH1 = document.querySelector("h1");
   currentCityH1.innerHTML = response.data.name;
-  // current temperature
-  let tempC = Math.round(response.data.main.temp);
+  // current temperature celsius
+  tempC = Math.round(response.data.main.temp);
   document.getElementById("current-temp").innerHTML = tempC;
-  let tempCFeels = Math.round(response.data.main.feels_like);
+  tempCFeels = Math.round(response.data.main.feels_like);
   document.getElementById("feels-like-temp").innerHTML = tempCFeels;
+  // current temperature fahrenheit
+  tempF = Math.round(tempC * 1.8 + 32);
+  tempFFeels = Math.round(tempCFeels * 1.8 + 32);
   // change weather icon
   document
     .getElementById("current-weather-icon")
@@ -54,7 +66,6 @@ function showWeatherParams(response) {
   document
     .getElementById("current-weather-icon")
     .setAttribute("alt", response.data.weather[0].description);
-
   // humidity
   let humidity = response.data.main.humidity;
   document.getElementById("humidity").innerHTML = `${humidity}%`;
@@ -73,7 +84,7 @@ function showWeatherParams(response) {
   sunset = new Date(sunset * 1000 + timezone);
   let sunsetIso = sunset.toISOString().match(/(\d{2}:\d{2})/);
   document.getElementById("sunset").innerHTML = sunsetIso[1];
-  // // timestamp
+  // timestamp
   document.getElementById("calculation-time").innerHTML = formatDate(
     response.data.dt * 1000
   );
@@ -87,7 +98,6 @@ function showErrorMessage(response) {
 
 function search(city) {
   let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-  console.log(url);
   axios.get(url).then(showWeatherParams, showErrorMessage);
 }
 // SEARCH FIELD INPUT
@@ -102,65 +112,6 @@ function handleSubmitSearch(event) {
 document
   .getElementById("search-form")
   .addEventListener("submit", handleSubmitSearch);
-
-// Display the city name from List of frequently used cities under Search field
-function searchSelectedCity(event) {
-  let selectedCity = event.target.innerText;
-  let url = `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=${apiKey}&units=metric`;
-  axios.get(url).then(showWeatherParams);
-  // clear input search
-  let searchInput = document.querySelector("#search-city-input");
-  searchInput.value = "";
-}
-document
-  .querySelector("ul.city-choices")
-  .addEventListener("click", searchSelectedCity);
-
-// Convert temperature units
-let tempC = Number(document.getElementById("current-temp").innerText);
-let tempF = Math.round(tempC * 1.8 + 32);
-let currentTempValues = {
-  celsius: tempC,
-  fahrenheit: tempF,
-};
-//
-let tempCFeels = Number(document.getElementById("feels-like-temp").innerText);
-let tempFFeels = Math.round(tempCFeels * 1.8 + 32);
-let currentTempFeelsValues = {
-  celsius: tempCFeels,
-  fahrenheit: tempFFeels,
-};
-//
-function convertCtoF(event) {
-  event.target.classList.remove("inactive-unit");
-  event.target.classList.add("click-prevention");
-  document.querySelector(".celsius-unit").classList.add("inactive-unit");
-  document.querySelector(".celsius-unit").classList.remove("click-prevention");
-  document.getElementById("current-temp").innerHTML =
-    currentTempValues.fahrenheit;
-  document.getElementById("feels-like-temp").innerHTML =
-    currentTempFeelsValues.fahrenheit;
-  document.getElementById("feels-like-temp-unit").innerHTML = "°F";
-}
-//
-document
-  .querySelector(".fahrenheit-unit")
-  .addEventListener("click", convertCtoF);
-//
-function convertFtoC(event) {
-  event.target.classList.remove("inactive-unit");
-  event.target.classList.add("click-prevention");
-  document.querySelector(".fahrenheit-unit").classList.add("inactive-unit");
-  document
-    .querySelector(".fahrenheit-unit")
-    .classList.remove("click-prevention");
-  document.getElementById("current-temp").innerHTML = currentTempValues.celsius;
-  document.getElementById("feels-like-temp").innerHTML =
-    currentTempFeelsValues.celsius;
-  document.getElementById("feels-like-temp-unit").innerHTML = "°C";
-}
-//
-document.querySelector(".celsius-unit").addEventListener("click", convertFtoC);
 
 // current-location button
 function getWeatherByGeo(event) {
@@ -180,5 +131,51 @@ document
   .getElementById("current-location")
   .addEventListener("click", getWeatherByGeo);
 
+// Display the city name from List of frequently used cities under Search field
+function searchSelectedCity(event) {
+  let selectedCity = event.target.innerText;
+  let url = `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=${apiKey}&units=metric`;
+  axios.get(url).then(showWeatherParams);
+  // clear input search
+  let searchInput = document.querySelector("#search-city-input");
+  searchInput.value = "";
+}
+document
+  .querySelector("ul.city-choices")
+  .addEventListener("click", searchSelectedCity);
+
+//TEMPERATURE CONVERSION
+function convertCtoF(event) {
+  event.target.classList.remove("inactive-unit");
+  event.target.classList.add("click-prevention");
+  document.querySelector(".celsius-unit").classList.add("inactive-unit");
+  document.querySelector(".celsius-unit").classList.remove("click-prevention");
+  document.getElementById("current-temp").innerHTML = tempF;
+  document.getElementById("feels-like-temp").innerHTML = tempFFeels;
+  document.getElementById("feels-like-temp-unit").innerHTML = "°F";
+}
+//
+document
+  .querySelector(".fahrenheit-unit")
+  .addEventListener("click", convertCtoF);
+//
+function convertFtoC(event) {
+  event.target.classList.remove("inactive-unit");
+  event.target.classList.add("click-prevention");
+  document.querySelector(".fahrenheit-unit").classList.add("inactive-unit");
+  document
+    .querySelector(".fahrenheit-unit")
+    .classList.remove("click-prevention");
+  document.getElementById("current-temp").innerHTML = tempC;
+  document.getElementById("feels-like-temp").innerHTML = tempCFeels;
+  document.getElementById("feels-like-temp-unit").innerHTML = "°C";
+}
+//
+document.querySelector(".celsius-unit").addEventListener("click", convertFtoC);
+// GLOBAL VARIABLES
+let tempC = null;
+let tempF = null;
+let tempCFeels = null;
+let tempFFeels = null;
 // Display city info by default Chernivtsi
 search("Chernivtsi");
