@@ -25,259 +25,165 @@
     />
     <link rel="stylesheet" href="src/style.css" />
   </head>
-  <body>
+  <body style="background-color: #f5f7fe">
     <div class="container">
-      <!-- Search engine -->
-      <div class="row">
-        <div class="col-lg-5 col-md-7">
-          <form id="search-form">
-            <div class="input-group mt-4">
-              <input
-                type="search"
-                class="form-control"
-                placeholder="Search for city..."
-                id="search-city-input"
-                autocomplete="off"
-              />
+      <div class="main">
+        <div class="wrapper">
+          <!-- Search engine -->
+          <div class="row">
+            <div class="col-lg-5 col-md-7">
+              <form id="search-form">
+                <div class="input-group mt-4">
+                  <input
+                    type="search"
+                    class="form-control"
+                    placeholder="Search for city..."
+                    id="search-city-input"
+                    autocomplete="off"
+                  />
+                  <button
+                    type="submit"
+                    class="btn btn-secondary"
+                    id="search-city-button"
+                  >
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </button>
+                </div>
+              </form>
+
+              <div class="col error-style" id="error-message"></div>
+            </div>
+            <div class="col-3">
               <button
-                type="submit"
-                class="btn btn-secondary"
-                id="search-city-button"
+                type="button"
+                class="btn btn-primary btn-current-location text-nowrap mt-4"
+                id="current-location"
               >
-                <i class="fa-solid fa-magnifying-glass"></i>
+                Current Location
               </button>
             </div>
-          </form>
-
-          <div class="col error-style" id="error-message"></div>
-        </div>
-        <div class="col-3">
-          <button
-            type="button"
-            class="btn btn-primary btn-current-location text-nowrap mt-4"
-            id="current-location"
-          >
-            Current Location
-          </button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-5 col-md-7">
-          <ul class="city-choices">
-            <li class="city-choice-item">
-              <a href="#" class="city-choice-link">Lviv</a>
-            </li>
-            <li class="city-choice-item">
-              <a href="#" class="city-choice-link">Kyiv</a>
-            </li>
-            <li class="city-choice-item">
-              <a href="#" class="city-choice-link">Odesa</a>
-            </li>
-            <li class="city-choice-item">
-              <a href="#" class="city-choice-link">Dnipro</a>
-            </li>
-            <li class="city-choice-item">
-              <a href="#" class="city-choice-link">Ivano-Frankivsk</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="row gx-5">
-        <div class="col-auto">
-          <!-- Current city and date-time -->
-          <div class="row mb-3">
-            <div class="col-auto">
-              <h1 class="heading"></h1>
+          </div>
+          <div class="row">
+            <div class="col-lg-5 col-md-7">
+              <ul class="city-choices">
+                <li class="city-choice-item">
+                  <a href="#" class="city-choice-link">Lviv</a>
+                </li>
+                <li class="city-choice-item">
+                  <a href="#" class="city-choice-link">Kyiv</a>
+                </li>
+                <li class="city-choice-item">
+                  <a href="#" class="city-choice-link">Odesa</a>
+                </li>
+                <li class="city-choice-item">
+                  <a href="#" class="city-choice-link">Dnipro</a>
+                </li>
+                <li class="city-choice-item">
+                  <a href="#" class="city-choice-link text-nowrap"
+                    >Ivano-Frankivsk</a
+                  >
+                </li>
+              </ul>
             </div>
-            <div class="col">
-              <p class="date-time text-muted">
-                <span>Last updated:</span>
+          </div>
+          <div class="row gx-5">
+            <div class="col-auto">
+              <!-- Current city and date-time -->
+              <div class="row mb-3">
+                <div class="col-auto">
+                  <h1 class="heading"></h1>
+                </div>
+                <div class="col">
+                  <p class="date-time text-muted">
+                    <span>Last updated:</span>
+                    <br />
+                    <span id="calculation-time"></span>
+                  </p>
+                </div>
+              </div>
+              <!-- Current temp and feels like, weather icon -->
+              <div class="row g-4">
+                <div class="col-auto">
+                  <h2 class="heading">
+                    <span id="current-temp"></span>
+                    <span class="degree-unit">
+                      <a href="#" class="celsius-unit">°C</a>
+                      <a href="#" class="fahrenheit-unit inactive-unit">°F</a>
+                    </span>
+                  </h2>
+                  <p class="text-muted">
+                    Feels like <span id="feels-like-temp"></span
+                    ><sup id="feels-like-temp-unit">°C</sup>
+                  </p>
+                </div>
+                <div class="col-auto text-center">
+                  <img src="" alt="" width="60px" id="current-weather-icon" />
+                  <p
+                    class="text-muted mt-2 weather-description"
+                    id="description"
+                  ></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-10 col-sm-10 col-md-6 col-lg-4">
+              <!-- Weather parameters summary -->
+              <div class="weather-parameters">
+                <div class="row">
+                  <div class="col text-nowrap">
+                    <!-- Humidity -->
+                    <i class="fa-solid fa-droplet para-icon-12"></i>
+                    Humidity
+                    <div class="para-value" id="humidity"></div>
+                  </div>
+                  <div class="col text-nowrap">
+                    <!-- Wind -->
+                    <i class="fa-solid fa-wind para-icon"></i>
+                    Wind
+                    <div class="para-value" id="wind"></div>
+                  </div>
+                </div>
                 <br />
-                <span id="calculation-time"></span>
-                <!-- <span id="day-month-date"></span>
-                <span id="time"> </span> -->
-              </p>
+                <div class="row">
+                  <div class="col text-nowrap">
+                    <!-- Sunrise -->
+                    <i class="fa-solid fa-circle-arrow-up para-icon"></i>
+                    Sunrise
+                    <div class="para-value" id="sunrise"></div>
+                  </div>
+                  <div class="col text-nowrap">
+                    <!-- Sunset -->
+                    <i class="fa-solid fa-circle-arrow-down para-icon"></i>
+                    Sunset
+                    <div class="para-value" id="sunset"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <!-- Current temp and feels like, weather icon -->
-          <div class="row g-4">
-            <div class="col-auto">
-              <h2 class="heading">
-                <span id="current-temp"></span>
-                <span class="degree-unit">
-                  <a href="#" class="celsius-unit">°C</a>
-                  <a href="#" class="fahrenheit-unit inactive-unit">°F</a>
-                </span>
-              </h2>
-              <p class="text-muted">
-                Feels like <span id="feels-like-temp"></span
-                ><sup id="feels-like-temp-unit">°C</sup>
-              </p>
-            </div>
-            <div class="col text-center">
-              <img src="" alt="" width="60px" id="current-weather-icon" />
-              <p
-                class="text-muted mt-2 weather-description"
-                id="description"
-              ></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-10 col-sm-10 col-md-6 col-lg-4">
-          <!-- Weather parameters summary -->
-          <div class="weather-parameters">
-            <div class="row">
-              <div class="col text-nowrap">
-                <!-- Humidity -->
-                <i class="fa-solid fa-droplet para-icon-12"></i>
-                Humidity
-                <div class="para-value" id="humidity"></div>
-              </div>
-              <div class="col text-nowrap">
-                <!-- Wind -->
-                <i class="fa-solid fa-wind para-icon"></i>
-                Wind
-                <div class="para-value" id="wind"></div>
-              </div>
-            </div>
-            <br />
-            <div class="row">
-              <div class="col text-nowrap">
-                <!-- Sunrise -->
-                <i class="fa-solid fa-circle-arrow-up para-icon"></i>
-                Sunrise
-                <div class="para-value" id="sunrise"></div>
-              </div>
-              <div class="col text-nowrap">
-                <!-- Sunset -->
-                <i class="fa-solid fa-circle-arrow-down para-icon"></i>
-                Sunset
-                <div class="para-value" id="sunset"></div>
-              </div>
+          <!-- Future weather forecast-->
+          <div class="weather-forecast" id="forecast"></div>
+          <!-- Info about author and source code -->
+          <div class="row">
+            <div class="col text-muted" style="opacity: 0.8">
+              This project was coded by
+              <a
+                href="https://www.linkedin.com/in/yana-semenenko/"
+                class="city-choice-link"
+                target="_blank"
+                >Yana Semenenko</a
+              >
+              and is
+              <a
+                href="https://github.com/yana-semenenko/weather-app"
+                class="city-choice-link"
+                target="_blank"
+                >open-sourced on GitHub
+              </a>
             </div>
           </div>
         </div>
+        <!-- the end of required content -->
       </div>
-      <!-- Future weather forecast in one row -->
-      <div
-        class="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-5 my-5 g-2"
-      >
-        <!-- 1st card -->
-        <div class="col">
-          <div class="card border-0 px-2 card-custom">
-            <div class="card-body">
-              <h5 class="card-title text-nowrap card-title-forecast">
-                Wed, Aug 10
-              </h5>
-              <div class="card-content-container">
-                <img
-                  src="media/icons/mostly-sunny.svg"
-                  alt="mostly sunny"
-                  width="60px"
-                />
-                <span class="highest-lowest-temp">
-                  <span class="highest"> 32<sup>°C</sup> <br /></span>
-                  <span class="lowest"> 22<sup>°C</sup></span>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2nd card -->
-        <div class="col">
-          <div class="card border-0 px-2 card-custom">
-            <div class="card-body">
-              <h5 class="card-title text-nowrap card-title-forecast">
-                Thu, Aug 11
-              </h5>
-              <div class="card-content-container">
-                <img src="media/icons/rainy.svg" alt="rainy" width="60px" />
-                <span class="highest-lowest-temp">
-                  <span class="highest"> 30<sup>°C</sup> <br /></span>
-                  <span class="lowest"> 18<sup>°C</sup></span>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 3rd card -->
-        <div class="col">
-          <div class="card border-0 px-2 card-custom">
-            <div class="card-body">
-              <h5 class="card-title text-nowrap card-title-forecast">
-                Fri, Aug 12
-              </h5>
-              <div class="card-content-container">
-                <img
-                  src="media/icons/scattered-thunderstorms.svg"
-                  alt="scattered thunderstorms"
-                  width="60px"
-                />
-                <span class="highest-lowest-temp">
-                  <span class="highest"> 28<sup>°C</sup> <br /></span>
-                  <span class="lowest"> 16<sup>°C</sup></span>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 4th card -->
-        <div class="col">
-          <div class="card border-0 px-2 card-custom">
-            <div class="card-body">
-              <h5 class="card-title text-nowrap card-title-forecast">
-                Sat, Aug 13
-              </h5>
-              <div class="card-content-container">
-                <img src="media/icons/cloudy.svg" alt="cloudy" width="60px" />
-                <span class="highest-lowest-temp">
-                  <span class="highest"> 35<sup>°C</sup> <br /></span>
-                  <span class="lowest"> 24<sup>°C</sup></span>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 5th card -->
-        <div class="col">
-          <div class="card border-0 px-2 card-custom">
-            <div class="card-body">
-              <h5 class="card-title text-nowrap card-title-forecast">
-                Sun, Aug 14
-              </h5>
-              <div class="card-content-container">
-                <img src="media/icons/sunny.svg" alt="sunny" width="60px" />
-                <span class="highest-lowest-temp">
-                  <span class="highest"> 33<sup>°C</sup> <br /></span>
-                  <span class="lowest"> 19<sup>°C</sup></span>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- closes row with 5days forecast -->
-      </div>
-      <!-- Info about author and source code -->
-      <div class="row">
-        <div class="col text-muted" style="opacity: 0.8">
-          This project was coded by
-          <a
-            href="https://www.linkedin.com/in/yana-semenenko/"
-            class="city-choice-link"
-            target="_blank"
-            >Yana Semenenko</a
-          >
-          and is
-          <a
-            href="https://github.com/yana-semenenko/weather-app"
-            class="city-choice-link"
-            target="_blank"
-            >open-sourced on GitHub
-          </a>
-        </div>
-      </div>
-      <!-- the end of required content -->
     </div>
     <script src="src/script.js"></script>
   </body>

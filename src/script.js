@@ -1,4 +1,5 @@
 let apiKey = "4bc4526b9c376d5f0c645084585c4fe5";
+let apiNewKey = "c95d60a1e3adbeb286133f1ebebc2579";
 
 function formatDate(timestamp) {
   let calcTime = new Date(timestamp);
@@ -31,6 +32,13 @@ function formatDate(timestamp) {
   return `${day}, ${month} ${date}, ${hours}:${minutes}`;
 }
 
+//  showForecast
+function showForecast(coordinates) {
+  let apiForecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude=current,minutely,hourly,alerts&appid=${apiNewKey}&units=metric`;
+  // console.log(apiForecastUrl);
+  axios.get(apiForecastUrl).then(displayForecast);
+}
+//
 // showWeatherParams
 function showWeatherParams(response) {
   // clear error message, if any
@@ -88,12 +96,53 @@ function showWeatherParams(response) {
   document.getElementById("calculation-time").innerHTML = formatDate(
     response.data.dt * 1000
   );
+  showForecast(response.data.coord);
 }
 
 function showErrorMessage(response) {
   document.getElementById(
     "error-message"
   ).innerHTML = `City not found. Please, check your request`;
+}
+
+function displayForecast(response) {
+  console.log(response.data.daily);
+  let forecast = document.getElementById("forecast");
+  let forecastDays = [
+    "Wed, Sep 7",
+    "Thu, Sep 8",
+    "Fri, Sep 9",
+    "Sat, Sep 10",
+    "Sun, Sep 11",
+  ];
+  let forecastHTML =
+    '<div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 row-cols-xl-5 my-5 g-2">';
+  forecastDays.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="col">
+            <div class="card border-0 px-2 card-custom">
+              <div class="card-body">
+                <h5 class="card-title text-nowrap card-title-forecast">
+                  ${day}
+                </h5>
+                <div class="card-content-container">
+                  <img
+                    src="http://openweathermap.org/img/wn/10d@2x.png"
+                    alt=""
+                    width="60px"
+                  />
+                  <span class="highest-lowest-temp">
+                    <span class="highest"> 32<sup>°C</sup> <br /></span>
+                    <span class="lowest"> 22<sup>°C</sup></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>`;
+  });
+  forecastHTML = forecastHTML + `</div>`;
+  forecast.innerHTML = forecastHTML;
 }
 
 function search(city) {
@@ -179,3 +228,4 @@ let tempCFeels = null;
 let tempFFeels = null;
 // Display city info by default Chernivtsi
 search("Chernivtsi");
+// displayForecast();
