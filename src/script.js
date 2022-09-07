@@ -1,6 +1,7 @@
 let apiKey = "4bc4526b9c376d5f0c645084585c4fe5";
 let apiNewKey = "c95d60a1e3adbeb286133f1ebebc2579";
-
+let apiNewKeySheCodes = "5f472b7acba333cd8a035ea85a0d4d4c";
+// ____________DATE CONVERSION____________________________
 function formatDate(timestamp) {
   let calcTime = new Date(timestamp);
   let months = [
@@ -32,14 +33,36 @@ function formatDate(timestamp) {
   return `${day}, ${month} ${date}, ${hours}:${minutes}`;
 }
 
+function formatDateForecast(timestamp) {
+  let forecastDay = new Date(timestamp);
+  let months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  let month = months[forecastDay.getMonth()];
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let day = days[forecastDay.getDay()];
+  let date = forecastDay.getDate();
+  return `${day}, ${month} ${date}`;
+}
+
 //  showForecast
 function showForecast(coordinates) {
-  let apiForecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude=current,minutely,hourly,alerts&appid=${apiNewKey}&units=metric`;
-  // console.log(apiForecastUrl);
+  let apiForecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude=current,minutely,hourly,alerts&appid=${apiNewKeySheCodes}&units=metric`;
+  console.log(apiForecastUrl);
   axios.get(apiForecastUrl).then(displayForecast);
 }
-//
-// showWeatherParams
+// ______________!!!ShowWeatherParams!!!__________________
 function showWeatherParams(response) {
   // clear error message, if any
   document.getElementById("error-message").innerHTML = ``;
@@ -106,43 +129,55 @@ function showErrorMessage(response) {
 }
 
 function displayForecast(response) {
-  console.log(response.data.daily);
-  let forecast = document.getElementById("forecast");
-  let forecastDays = [
-    "Wed, Sep 7",
-    "Thu, Sep 8",
-    "Fri, Sep 9",
-    "Sat, Sep 10",
-    "Sun, Sep 11",
-  ];
+  let forecast = response.data.daily;
+  let forecastElement = document.getElementById("forecast");
   let forecastHTML =
     '<div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 row-cols-xl-5 my-5 g-2">';
-  forecastDays.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `<div class="col">
+  forecast.forEach(function (day, i) {
+    if (i > 0 && i < 6) {
+      tempForecastMax = day.temp.max;
+      tempForecastMin = day.temp.min;
+      tempForecastMaxFahren = Math.round(tempForecastMax * 1.8 + 32);
+      tempForecastMinFahren = Math.round(tempForecastMin * 1.8 + 32);
+      forecastHTML =
+        forecastHTML +
+        `<div class="col">
             <div class="card border-0 px-2 card-custom">
               <div class="card-body">
                 <h5 class="card-title text-nowrap card-title-forecast">
-                  ${day}
+                 ${formatDateForecast(day.dt * 1000)}
                 </h5>
                 <div class="card-content-container">
                   <img
-                    src="http://openweathermap.org/img/wn/10d@2x.png"
-                    alt=""
+                    src="http://openweathermap.org/img/wn/${
+                      day.weather[0].icon
+                    }@2x.png"
+                    alt="${day.weather[0].description}"
                     width="60px"
                   />
                   <span class="highest-lowest-temp">
-                    <span class="highest"> 32<sup>°C</sup> <br /></span>
-                    <span class="lowest"> 22<sup>°C</sup></span>
+                    <span class="highest-cel" style="display: inline">${Math.round(
+                      tempForecastMax
+                    )}°</span>
+                    <span class="highest-fah" style="display: none">${Math.round(
+                      tempForecastMaxFahren
+                    )}°</span>
+                    <br />
+                    <span class="lowest-cel" style="display: inline">${Math.round(
+                      tempForecastMin
+                    )}°</span>
+                    <span class="lowest-fah" style="display: none">${Math.round(
+                      tempForecastMinFahren
+                    )}°</span>
                   </span>
                 </div>
               </div>
             </div>
           </div>`;
+    }
   });
   forecastHTML = forecastHTML + `</div>`;
-  forecast.innerHTML = forecastHTML;
+  forecastElement.innerHTML = forecastHTML;
 }
 
 function search(city) {
@@ -168,7 +203,6 @@ function getWeatherByGeo(event) {
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
-    // console.log(url);
     axios.get(url).then(showWeatherParams);
     // clear input search
     let searchInput = document.querySelector("#search-city-input");
@@ -193,7 +227,7 @@ document
   .querySelector("ul.city-choices")
   .addEventListener("click", searchSelectedCity);
 
-//TEMPERATURE CONVERSION
+//_______________________TEMPERATURE CONVERSION_______________________________
 function convertCtoF(event) {
   event.target.classList.remove("inactive-unit");
   event.target.classList.add("click-prevention");
@@ -202,6 +236,19 @@ function convertCtoF(event) {
   document.getElementById("current-temp").innerHTML = tempF;
   document.getElementById("feels-like-temp").innerHTML = tempFFeels;
   document.getElementById("feels-like-temp-unit").innerHTML = "°F";
+  // _____________________________forecast_____________________________________
+  document.querySelectorAll(".highest-cel").forEach(function (element, index) {
+    element.style.display = "none";
+  });
+  document.querySelectorAll(".lowest-cel").forEach(function (element, index) {
+    element.style.display = "none";
+  });
+  document.querySelectorAll(".highest-fah").forEach(function (element, index) {
+    element.style.display = "inline";
+  });
+  document.querySelectorAll(".lowest-fah").forEach(function (element, index) {
+    element.style.display = "inline";
+  });
 }
 //
 document
@@ -218,6 +265,19 @@ function convertFtoC(event) {
   document.getElementById("current-temp").innerHTML = tempC;
   document.getElementById("feels-like-temp").innerHTML = tempCFeels;
   document.getElementById("feels-like-temp-unit").innerHTML = "°C";
+  // _____________________________forecast___________________________________________________________________________
+  document.querySelectorAll(".highest-cel").forEach(function (element, index) {
+    element.style.display = "inline";
+  });
+  document.querySelectorAll(".lowest-cel").forEach(function (element, index) {
+    element.style.display = "inline";
+  });
+  document.querySelectorAll(".highest-fah").forEach(function (element, index) {
+    element.style.display = "none";
+  });
+  document.querySelectorAll(".lowest-fah").forEach(function (element, index) {
+    element.style.display = "none";
+  });
 }
 //
 document.querySelector(".celsius-unit").addEventListener("click", convertFtoC);
@@ -226,6 +286,10 @@ let tempC = null;
 let tempF = null;
 let tempCFeels = null;
 let tempFFeels = null;
+let tempForecastMax = null;
+let tempForecastMin = null;
+let tempForecastMaxFahren = null;
+let tempForecastMinFahren = null;
+
 // Display city info by default Chernivtsi
 search("Chernivtsi");
-// displayForecast();

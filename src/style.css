@@ -71,16 +71,24 @@
   font-size: 20px;
   font-weight: 700;
   color: #14216b;
-  line-height: 1.2;
+  line-height: 1.6;
   margin: 0;
 }
 .card-custom:hover .card-body .card-title-forecast {
   color: #f5f7fe;
 }
-.card-custom:hover .card-body .highest {
+.card-custom:hover .card-body .highest-cel {
   color: #ed5e74;
 }
-.card-custom:hover .card-body .lowest {
+
+.card-custom:hover .card-body .highest-fah {
+  color: #ed5e74;
+}
+.card-custom:hover .card-body .lowest-cel {
+  color: #8798f7;
+}
+
+.card-custom:hover .card-body .lowest-fah {
   color: #8798f7;
 }
 .highest-lowest-temp {
@@ -89,10 +97,12 @@
   font-size: 16px;
   line-height: 1.4;
 }
-.highest {
+.highest-cel,
+.highest-fah {
   color: #de344e;
 }
-.lowest {
+.lowest-cel,
+.lowest-fah {
   color: #1e319e;
 }
 .card-custom {
