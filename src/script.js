@@ -59,7 +59,6 @@ function formatDateForecast(timestamp) {
 //  showForecast
 function showForecast(coordinates) {
   let apiForecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude=current,minutely,hourly,alerts&appid=${apiNewKeySheCodes}&units=metric`;
-  console.log(apiForecastUrl);
   axios.get(apiForecastUrl).then(displayForecast);
 }
 // ______________!!!ShowWeatherParams!!!__________________
