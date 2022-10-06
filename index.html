@@ -56,14 +56,14 @@
             <div class="col-3">
               <button
                 type="button"
-                class="btn btn-primary btn-current-location text-nowrap mt-4"
+                class="btn btn-primary btn-current-location text-nowrap mt-4 border-0 shadow-none"
                 id="current-location"
               >
                 Current Location
               </button>
             </div>
           </div>
-          <div class="row">
+          <div class="row d-none d-md-block">
             <div class="col-lg-5 col-md-7">
               <ul class="city-choices">
                 <li class="city-choice-item">
@@ -86,14 +86,14 @@
               </ul>
             </div>
           </div>
-          <div class="row gx-5">
+          <div class="row align-items-center gx-5">
             <div class="col-auto">
               <!-- Current city and date-time -->
               <div class="row mb-3">
                 <div class="col-auto">
-                  <h1 class="heading"></h1>
+                  <h1 class="heading mt-3 mt-md-0"></h1>
                 </div>
-                <div class="col">
+                <div class="col d-none d-md-block">
                   <p class="date-time text-muted">
                     <span>Last updated:</span>
                     <br />
@@ -117,7 +117,7 @@
                   </p>
                 </div>
                 <div class="col-auto text-center">
-                  <img src="" alt="" width="60px" id="current-weather-icon" />
+                  <img src="" alt="" width="59px" id="current-weather-icon" />
                   <p
                     class="text-muted mt-2 weather-description"
                     id="description"

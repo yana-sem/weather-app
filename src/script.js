@@ -1,6 +1,15 @@
 let apiKey = "4bc4526b9c376d5f0c645084585c4fe5";
-let apiNewKey = "c95d60a1e3adbeb286133f1ebebc2579";
-let apiNewKeySheCodes = "5f472b7acba333cd8a035ea85a0d4d4c";
+let apiKeys = [
+  "5863935ee9cca4c02ed68203f807c65b",
+  "e6c2364656962bdcb16bc352fc42569a",
+  "ed238469f9b5e9d801834270e65449bc",
+  "caa883a4a60d93878755b08a933f74ea",
+  "9cb72bec958f8fb02391985ed7b219d2",
+  "197ef3a642b76eef90e131866f74a0a0",
+  "3fdc8cfbf2d6fa0116c9ae92d3df4f79",
+  "73a00877081bd43422bdee0f3022beb5",
+];
+// console.log(apiKeys);
 // ____________DATE CONVERSION____________________________
 function formatDate(timestamp) {
   let calcTime = new Date(timestamp);
@@ -57,9 +66,26 @@ function formatDateForecast(timestamp) {
 }
 
 //  showForecast
-function showForecast(coordinates) {
-  let apiForecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude=current,minutely,hourly,alerts&appid=${apiNewKeySheCodes}&units=metric`;
-  axios.get(apiForecastUrl).then(displayForecast);
+function showForecast(coordinates, api_key_index = 0) {
+  if (api_key_index >= apiKeys.length) {
+    console.log("Show error not today!");
+    return;
+  }
+  let apiForecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude=current,minutely,hourly,alerts&appid=${apiKeys[api_key_index]}&units=metric`;
+  // old:  axios.get(apiForecastUrl).then(displayForecast);
+
+  // experiments
+  axios
+    .get(apiForecastUrl)
+    .then(displayForecast)
+    .catch(function (error) {
+      // code
+      console.log("Show error notification!");
+      showForecast(coordinates, api_key_index + 1);
+      return Promise.reject(error);
+    });
+
+  // experiments end
 }
 // ______________!!!ShowWeatherParams!!!__________________
 function showWeatherParams(response) {

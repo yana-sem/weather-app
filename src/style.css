@@ -71,19 +71,18 @@
   font-size: 20px;
   font-weight: 700;
   color: #14216b;
+  /* color: #f5f7fe; */
   line-height: 1.6;
   margin: 0;
 }
 .card-custom:hover .card-body .card-title-forecast {
   color: #f5f7fe;
 }
-.card-custom:hover .card-body .highest-cel {
-  color: #ed5e74;
-}
-
+.card-custom:hover .card-body .highest-cel,
 .card-custom:hover .card-body .highest-fah {
   color: #ed5e74;
 }
+
 .card-custom:hover .card-body .lowest-cel {
   color: #8798f7;
 }
@@ -99,17 +98,22 @@
 }
 .highest-cel,
 .highest-fah {
-  color: #de344e;
+  color: hsl(351, 72%, 44%);
+  /* color: #ed5e74; */
 }
 .lowest-cel,
 .lowest-fah {
-  color: #1e319e;
+  color: hsl(231, 68%, 53%);
 }
 .card-custom {
   width: 160px;
-  background: #f5f7fe;
-  transition: all 100ms ease-in-out;
+  /* background: #f5f7fe; */
+  /* background: #576ff4; */
+  /* background: #d5dbfc; */
+  background: #cdd4fc;
+  transition: all 150ms ease-in-out;
 }
+
 .card-custom:hover {
   background: #14216b;
   box-shadow: 0px 8px 16px rgba(14, 25, 75, 0.15);
@@ -123,10 +127,17 @@ a {
 .click-prevention {
   pointer-events: none;
 }
-.btn-current-location {
+.btn-current-location,
+.btn-current-location:focus {
   background: #576ff4;
   border: none;
 }
+
+.btn-current-location:hover {
+  background: #14216b;
+  border: 0;
+}
+
 .error-style {
   margin: 8px 0 0 10px;
   color: #de344e;
@@ -146,3 +157,5 @@ a {
   border-radius: 20px;
   box-shadow: 0px 5px 32px rgba(14, 25, 75, 0.1);
 }
+
+/* @media (max-width: 768px)  */
